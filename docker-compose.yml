@@ -1,0 +1,24 @@
+services:
+  university_attendance_system:
+    build: . 
+    tty: true
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+
+  db:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_USER: ojt
+      MYSQL_PASSWORD: password
+    restart: 'always'
+    ports:
+      - 3306:3306
+    volumes:
+      - db_data:/var/lib/mysql
+volumes:
+    db_data:
