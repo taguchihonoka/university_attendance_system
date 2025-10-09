@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateDepartmentHistory < ActiveRecord::Migration[8.0]
   def change
     create_table :department_history do |t|

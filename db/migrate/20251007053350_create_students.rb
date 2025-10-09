@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateStudents < ActiveRecord::Migration[8.0]
   def change
     create_table :students do |t|
@@ -8,7 +10,6 @@ class CreateStudents < ActiveRecord::Migration[8.0]
       t.date :enrolled_date, null: false
       t.date :graduated_date
       t.date :dropout_date
-
 
       t.timestamps
     end
