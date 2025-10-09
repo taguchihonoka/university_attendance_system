@@ -1,0 +1,33 @@
+AllCops:
+  TargetRubyVersion: 3.4.1
+  NewCops: enable  
+  Exclude:
+    - 'vendor/**/*'
+    - 'db/**/*'
+    - 'lib/tasks/**/*'
+    - "db/schema.rb"
+    - 'bin/*'
+    - 'test/*'
+    - 'node_modules/**/*'
+    - 'config/initializers/**/*'
+    - 'public/**/*'
+    - 'storage/**/*'
+    - 'log/**/*'
+    - 'tmp/**/*'
+
+plugins: 
+  - rubocop-rails
+
+### ルールのカスタマイズ
+
+# 日本語にコメントを許可
+Style/AsciiComments:
+  Enabled: false
+
+# クラスにコメントを残さなくても良い
+Style/Documentation:
+  Enabled: false
+
+# 未i18nのチェック
+Rails/I18nLocaleTexts:
+  Enabled: false
