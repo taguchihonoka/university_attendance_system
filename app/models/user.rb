@@ -2,10 +2,10 @@
 
 class User < ApplicationRecord
   belongs_to :role
-  has_one :student
-  has_one :teacher
-  has_one :admin
-  has_many :leave
+  has_one :student, dependent: :destroy
+  has_one :teacher, dependent: :destroy
+  has_one :admin, dependent: :destroy
+  has_many :leave, dependent: :destroy
   validates :first_name, presence: true
   validates :last_name, presence: true
   validates :first_name_kana, presence: true

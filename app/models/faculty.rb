@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
 class Faculty < ApplicationRecord
-  has_many :departments
+  has_many :departments, dependent: :destroy
 end
