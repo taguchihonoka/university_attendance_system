@@ -11,7 +11,6 @@ class User < ApplicationRecord
   validates :first_name_kana, presence: true
   validates :last_name_kana, presence: true
   validates :email, presence: true, uniqueness: true
-  validates :role, presence: true
   validates :password, presence: true
   validates :identifier, presence: true, uniqueness: true
   has_secure_password
