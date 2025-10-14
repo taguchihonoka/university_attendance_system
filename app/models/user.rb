@@ -5,7 +5,7 @@ class User < ApplicationRecord
   has_one :student, dependent: :destroy
   has_one :teacher, dependent: :destroy
   has_one :admin, dependent: :destroy
-  has_many :leave, dependent: :destroy
+  has_many :leave_records, dependent: :destroy
   validates :first_name, presence: true
   validates :last_name, presence: true
   validates :first_name_kana, presence: true
