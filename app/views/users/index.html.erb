@@ -1,2 +1,23 @@
-<h1>Users#index</h1>
-<p>Find me in app/views/users/index.html.erb</p>
+<h1>ユーザー一覧</h1>
+
+<div class='users'>
+  <% @users.each do |user| %>
+    <ul>
+      <li>ユーザー種別: <%= user.role.name %></li>
+      <li>名前: <%= user.first_name %><%= user.last_name%></li>
+
+      <% if user.role_id == 1 %>
+        <li>学年: <%= user.student.grade %></li>
+        <li>学部: <%= user.student.department.faculty.name %></li>
+        <li>学科: <%= user.student.department.name %></li>
+      <% end %>
+
+      <% if user.role_id == 2 %>
+        <li>職位: <%= user.teacher.position.name %></li>
+        <li>学部: <%= user.teacher.department.faculty.name %></li>
+        <li>学科: <%= user.teacher.department.name %></li>
+      <% end %>
+    </ul>
+
+  <% end %>
+</div>
