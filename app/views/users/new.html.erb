@@ -1,2 +1,47 @@
-<h1>Users#new</h1>
-<p>Find me in app/views/users/new.html.erb</p>
+<h1>ユーザー登録</h1>
+
+<%= form_with(model: @user, local: true) do |form| %>
+  <div>
+    <%= form.label :role_id, 'ユーザー種別'%>
+    <%= form.collection_select :role_id, Role.all, :id, :name %>
+  </div>
+
+  <div>
+    <%= form.label :first_name, '姓'%>
+    <%= form.text_field :first_name %>
+  </div>
+
+  <div>
+    <%= form.label :last_name, '名'%>
+    <%= form.text_field :last_name %>
+  </div>
+
+  <div>
+    <%= form.label :first_name_kana, '姓(かな)'%>
+    <%= form.text_field :first_name_kana %>
+  </div>
+
+  <div>
+    <%= form.label :last_name_kana, '名(かな)'%>
+    <%= form.text_field :last_name_kana %>
+  </div>
+
+  <div>
+    <%= form.label :email, 'メールアドレス'%>
+    <%= form.text_field :email %>
+  </div>
+
+  <div>
+    <%= form.label :password, 'パスワード'%>
+    <%= form.text_field :password %>
+  </div>
+
+  <div>
+    <%= form.label :identifier, 'ログインID'%>
+    <%= form.text_field :identifier %>
+  </div>
+
+  <div>
+    <%= form.submit '登録' %>
+  </div>
+<% end %>
