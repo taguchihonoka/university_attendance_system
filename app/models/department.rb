@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
-class Position < ApplicationRecord
+class Department < ApplicationRecord
+  belongs_to :faculty
   validates :name, presence: true
 end
