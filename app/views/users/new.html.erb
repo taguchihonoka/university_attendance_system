@@ -1,7 +1,7 @@
 <h1>ユーザー登録</h1>
 
 <%= form_with(model: @user, local: true) do |form| %>
-  <div>
+  <div class='role-field'>
     <%= form.label :role_id, 'ユーザー種別'%>
     <%= form.collection_select :role_id, Role.all, :id, :name %>
   </div>
@@ -40,19 +40,21 @@
     <%= form.label :identifier, 'ログインID'%>
     <%= form.text_field :identifier %>
   </div>
+<% end %>
 
+<%= form_with(model: @student, local: true) do |form| %>
   <div class='student-field'>
     <%= form.label :attendance_number, '出席番号'%>
     <%= form.text_field :attendance_number %>
   </div>
 
-  <div class='student-teacher-field'>
-    <%= form.label :faculty, '学部'%>
-    <%= form.collection_select :faculty, Faculty.all, :id, :name %>
+  <div class='student-field'>
+    <%= form.label :faculty_id, '学部'%>
+    <%= form.collection_select :faculty_id, Faculty.all, :id, :name %>
   </div>
 
-  <div class='student-teacher-field'>
-    <%= form.label :department, '学科'%>
+  <div class='student-field'>
+    <%= form.label :department_id, '学科'%>
     <%= form.collection_select :department_id, Department.all, :id, :name %>
   </div>
 
@@ -63,25 +65,27 @@
 
   <div class='student-field'>
     <%= form.label :enrolled_date, '入学日' %>
-    <%= select_tag :enrolled_year, options_for_select((Date.current.year - 10..Date.current.year).to_a.reverse) %>
-    <%= select_tag :enrolled_month, options_for_select((1..12).to_a) %>
-    <%= select_tag :enrolled_day, options_for_select((1..31).to_a) %>
+    <%= form.select :enrolled_year, options_for_select((Date.current.year - 10..Date.current.year).to_a.reverse) %>
+    <%= form.select :enrolled_month, options_for_select((1..12).to_a) %>
+    <%= form.select :enrolled_day, options_for_select((1..31).to_a) %>
   </div>
 
   <div class='student-field'>
     <%= form.label :graduated_date, '卒業日' %>
-    <%= select_tag :graduated_year, options_for_select((Date.current.year - 80..Date.current.year).to_a.reverse) %>
-    <%= select_tag :graduated_month, options_for_select((1..12).to_a) %>
-    <%= select_tag :graduated_day, options_for_select((1..31).to_a) %>
+    <%= form.select :graduated_year, options_for_select((Date.current.year - 80..Date.current.year).to_a.reverse) %>
+    <%= form.select :graduated_month, options_for_select((1..12).to_a) %>
+    <%= form.select :graduated_day, options_for_select((1..31).to_a) %>
   </div>
 
   <div class='student-field'>
     <%= form.label :dropout_date, '中退日' %>
-    <%= select_tag :dropout_year, options_for_select((Date.current.year - 80..Date.current.year).to_a.reverse) %>
-    <%= select_tag :dropout_month, options_for_select((1..12).to_a) %>
-    <%= select_tag :dropout_day, options_for_select((1..31).to_a) %>
+    <%= form.select :dropout_year, options_for_select((Date.current.year - 80..Date.current.year).to_a.reverse) %>
+    <%= form.select :dropout_month, options_for_select((1..12).to_a) %>
+    <%= form.select :dropout_day, options_for_select((1..31).to_a) %>
   </div>
+<% end %>
 
+<%= form_with(model: @teacher, local: true) do |form|%>
   <div class='teacher-field'>
     <%= form.label :instructor_number, '講師番号' %>
     <%= form.text_field :instructor_number %>
@@ -93,37 +97,49 @@
   </div>
 
   <div class='teacher-field'>
+    <%= form.label :faculty_id, '学部'%>
+    <%= form.collection_select :faculty_id, Faculty.all, :id, :name %>
+  </div>
+
+  <div class='teacher-field'>
+    <%= form.label :department_id, '学科'%>
+    <%= form.collection_select :department_id, Department.all, :id, :name %>
+  </div>
+
+  <div class='teacher-field'>
     <%= form.label :assigned_date, '着任日' %>
-    <%= select_tag :assigned_year, options_for_select((Date.current.year - 50..Date.current.year).to_a.reverse) %>
-    <%= select_tag :assigned_month, options_for_select((1..12).to_a) %>
-    <%= select_tag :assigned_day, options_for_select((1..31).to_a) %>
+    <%= form.select :assigned_year, options_for_select((Date.current.year - 50..Date.current.year).to_a.reverse) %>
+    <%= form.select :assigned_month, options_for_select((1..12).to_a) %>
+    <%= form.select :assigned_day, options_for_select((1..31).to_a) %>
   </div>
 
   <div class='teacher-field'>
     <%= form.label :retired_date, '離任日' %>
-    <%= select_tag :retired_year, options_for_select((Date.current.year - 80..Date.current.year).to_a.reverse) %>
-    <%= select_tag :retired_month, options_for_select((1..12).to_a) %>
-    <%= select_tag :retired_day, options_for_select((1..31).to_a) %>
+    <%= form.select :retired_year, options_for_select((Date.current.year - 80..Date.current.year).to_a.reverse) %>
+    <%= form.select :retired_month, options_for_select((1..12).to_a) %>
+    <%= form.select :retired_day, options_for_select((1..31).to_a) %>
   </div>
 
+<%= form_with(model: @admin, local: true) do |form| %>
   <div class='admin-filed'>
     <%= form.label :admin_number, '管理者番号' %>
     <%= form.text_field :admin_number %>
   </div>
 
-  <div class='asmin-field'>
+  <div class='admin-field'>
     <%= form.label :joined_date, '入社日' %>
-    <%= select_tag :joined_year, options_for_select((Date.current.year - 50..Date.current.year).to_a.reverse) %>
-    <%= select_tag :joined_month, options_for_select((1..12).to_a) %>
-    <%= select_tag :joined_day, options_for_select((1..31).to_a) %>
+    <%= form.select :joined_year, options_for_select((Date.current.year - 50..Date.current.year).to_a.reverse) %>
+    <%= form.select :joined_month, options_for_select((1..12).to_a) %>
+    <%= form.select :joined_day, options_for_select((1..31).to_a) %>
   </div>
 
   <div class='admin-field'>
     <%= form.label :retired_date, '退職日' %>
-    <%= select_tag :retired_year, options_for_select((Date.current.year - 80..Date.current.year).to_a.reverse) %>
-    <%= select_tag :retired_month, options_for_select((1..12).to_a) %>
-    <%= select_tag :retired_day, options_for_select((1..31).to_a) %>
+    <%= form.select :retired_year, options_for_select((Date.current.year - 80..Date.current.year).to_a.reverse) %>
+    <%= form.select :retired_month, options_for_select((1..12).to_a), {}, { id: 'admin_retired_month' } %>
+    <%= form.select :retired_day, options_for_select((1..31).to_a) %>
   </div>
+<% end %>
 
   <div>
     <%= form.submit '登録' %>

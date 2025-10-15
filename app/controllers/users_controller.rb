@@ -9,6 +9,9 @@ class UsersController < ApplicationController
 
   def new
     @user = User.new
+    @student = Student.new
+    @teacher = Teacher.new
+    @admin = Admin.new
   end
 
   def edit; end
