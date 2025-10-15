@@ -41,6 +41,90 @@
     <%= form.text_field :identifier %>
   </div>
 
+  <div class='student-field'>
+    <%= form.label :attendance_number, '出席番号'%>
+    <%= form.text_field :attendance_number %>
+  </div>
+
+  <div class='student-teacher-field'>
+    <%= form.label :faculty, '学部'%>
+    <%= form.collection_select :faculty, Faculty.all, :id, :name %>
+  </div>
+
+  <div class='student-teacher-field'>
+    <%= form.label :department, '学科'%>
+    <%= form.collection_select :department_id, Department.all, :id, :name %>
+  </div>
+
+  <div class='student-field'>
+    <%= form.label :grade, '学年'%>
+    <%= form.select :grade, Student::GRADE_LABEL.map { |key, label|[label, Student.grades[key]] } %>
+  </div>
+
+  <div class='student-field'>
+    <%= form.label :enrolled_date, '入学日' %>
+    <%= select_tag :enrolled_year, options_for_select((Date.current.year - 10..Date.current.year).to_a.reverse) %>
+    <%= select_tag :enrolled_month, options_for_select((1..12).to_a) %>
+    <%= select_tag :enrolled_day, options_for_select((1..31).to_a) %>
+  </div>
+
+  <div class='student-field'>
+    <%= form.label :graduated_date, '卒業日' %>
+    <%= select_tag :graduated_year, options_for_select((Date.current.year - 80..Date.current.year).to_a.reverse) %>
+    <%= select_tag :graduated_month, options_for_select((1..12).to_a) %>
+    <%= select_tag :graduated_day, options_for_select((1..31).to_a) %>
+  </div>
+
+  <div class='student-field'>
+    <%= form.label :dropout_date, '中退日' %>
+    <%= select_tag :dropout_year, options_for_select((Date.current.year - 80..Date.current.year).to_a.reverse) %>
+    <%= select_tag :dropout_month, options_for_select((1..12).to_a) %>
+    <%= select_tag :dropout_day, options_for_select((1..31).to_a) %>
+  </div>
+
+  <div class='teacher-field'>
+    <%= form.label :instructor_number, '講師番号' %>
+    <%= form.text_field :instructor_number %>
+  </div>
+
+  <div class='teacher-field'>
+    <%= form.label :position, '職位' %>
+    <%= form.collection_select :position_id, Position.all, :id, :name %>
+  </div>
+
+  <div class='teacher-field'>
+    <%= form.label :assigned_date, '着任日' %>
+    <%= select_tag :assigned_year, options_for_select((Date.current.year - 50..Date.current.year).to_a.reverse) %>
+    <%= select_tag :assigned_month, options_for_select((1..12).to_a) %>
+    <%= select_tag :assigned_day, options_for_select((1..31).to_a) %>
+  </div>
+
+  <div class='teacher-field'>
+    <%= form.label :retired_date, '離任日' %>
+    <%= select_tag :retired_year, options_for_select((Date.current.year - 80..Date.current.year).to_a.reverse) %>
+    <%= select_tag :retired_month, options_for_select((1..12).to_a) %>
+    <%= select_tag :retired_day, options_for_select((1..31).to_a) %>
+  </div>
+
+  <div class='admin-filed'>
+    <%= form.label :admin_number, '管理者番号' %>
+    <%= form.text_field :admin_number %>
+  </div>
+
+  <div class='asmin-field'>
+    <%= form.label :joined_date, '入社日' %>
+    <%= select_tag :joined_year, options_for_select((Date.current.year - 50..Date.current.year).to_a.reverse) %>
+    <%= select_tag :joined_month, options_for_select((1..12).to_a) %>
+    <%= select_tag :joined_day, options_for_select((1..31).to_a) %>
+  </div>
+
+  <div class='admin-field'>
+    <%= form.label :retired_date, '退職日' %>
+    <%= select_tag :retired_year, options_for_select((Date.current.year - 80..Date.current.year).to_a.reverse) %>
+    <%= select_tag :retired_month, options_for_select((1..12).to_a) %>
+    <%= select_tag :retired_day, options_for_select((1..31).to_a) %>
+  </div>
+
   <div>
     <%= form.submit '登録' %>
   </div>
