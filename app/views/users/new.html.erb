@@ -1,9 +1,9 @@
 <h1>ユーザー登録</h1>
 
 <%= form_with(model: @user, local: true) do |form| %>
-  <div class='role-field'>
+  <div>
     <%= form.label :role_id, 'ユーザー種別'%>
-    <%= form.collection_select :role_id, Role.all, :id, :name %>
+    <%= form.collection_select :role_id, Role.all, :id, :name, {} , { class: 'role-field' } %>
   </div>
 
   <div>
@@ -46,7 +46,7 @@
   <div class='student-field'>
     <%= form.label :attendance_number, '出席番号'%>
     <%= form.text_field :attendance_number %>
-  </div>
+    </div>
 
   <div class='student-field'>
     <%= form.label :faculty_id, '学部'%>
@@ -121,7 +121,7 @@
   </div>
 
 <%= form_with(model: @admin, local: true) do |form| %>
-  <div class='admin-filed'>
+  <div class='admin-field'>
     <%= form.label :admin_number, '管理者番号' %>
     <%= form.text_field :admin_number %>
   </div>
