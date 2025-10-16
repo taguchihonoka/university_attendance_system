@@ -31,4 +31,9 @@ class Student < ApplicationRecord
   validates :attendance_number, presence: true
   validates :grade, presence: true
   validates :enrolled_date, presence: true
+
+  # 表示を日本語にする
+  def grade_label
+    GRADE_LABEL[grade.to_sym]
+  end
 end

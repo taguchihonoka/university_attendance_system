@@ -7,7 +7,7 @@
       <li>名前: <%= user.first_name %><%= user.last_name%></li>
 
       <% if user.role_id == 1 %>
-        <li>学年: <%= user.student.grade %></li>
+        <li>学年: <%= user.student.grade_label %></li>
         <li>学部: <%= user.student.department.faculty.name %></li>
         <li>学科: <%= user.student.department.name %></li>
       <% end %>
