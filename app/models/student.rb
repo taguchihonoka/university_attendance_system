@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:disable Naming/VariableNumber
 class Student < ApplicationRecord
  # 学年入力のセレクトボックス用
   enum :grade, {
@@ -37,3 +38,4 @@ class Student < ApplicationRecord
     GRADE_LABEL[grade.to_sym]
   end
 end
+# rubocop:enable Naming/VariableNumber
