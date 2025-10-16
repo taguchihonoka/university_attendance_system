@@ -72,16 +72,16 @@
 
     <div>
     <%= form.label :graduated_date, '卒業日' %>
-    <%= form.select :graduated_year, options_for_select((Date.current.year - 80..Date.current.year).to_a.reverse) %>
-    <%= form.select :graduated_month, options_for_select((1..12).to_a) %>
-    <%= form.select :graduated_day, options_for_select((1..31).to_a) %>
+    <%= form.select :graduated_year, options_for_select([['未登録', '']] + (Date.current.year - 80..Date.current.year).to_a.reverse) %>
+    <%= form.select :graduated_month, options_for_select([['未登録', '']] + ((1..12).to_a)) %>
+    <%= form.select :graduated_day, options_for_select([['未登録', '']] + ((1..31).to_a)) %>
     </div>
 
     <div>
     <%= form.label :dropout_date, '中退日' %>
-    <%= form.select :dropout_year, options_for_select((Date.current.year - 80..Date.current.year).to_a.reverse) %>
-    <%= form.select :dropout_month, options_for_select((1..12).to_a) %>
-    <%= form.select :dropout_day, options_for_select((1..31).to_a) %>
+    <%= form.select :dropout_year, options_for_select([['未登録', '']] + ((Date.current.year - 80..Date.current.year).to_a.reverse)) %>
+    <%= form.select :dropout_month, options_for_select([['未登録', '']] + ((1..12).to_a)) %>
+    <%= form.select :dropout_day, options_for_select([['未登録', '']] + ((1..31).to_a)) %>
     </div>
   <% end %>
   </div>    
@@ -118,9 +118,9 @@
 
     <div>
     <%= form.label :retired_date, '離任日' %>
-    <%= form.select :retired_year, options_for_select((Date.current.year - 80..Date.current.year).to_a.reverse) %>
-    <%= form.select :retired_month, options_for_select((1..12).to_a) %>
-    <%= form.select :retired_day, options_for_select((1..31).to_a) %>
+    <%= form.select :retired_year, options_for_select([['未登録', '']] + ((Date.current.year - 80..Date.current.year).to_a.reverse)) %>
+    <%= form.select :retired_month, options_for_select([['未登録', '']] + ((1..12).to_a)) %>
+    <%= form.select :retired_day, options_for_select([['未登録', '']] + ((1..31).to_a)) %>
     </div>
   <% end %>
   </div>
@@ -141,9 +141,9 @@
 
     <div>
       <%= form.label :retired_date, '退職日' %>
-      <%= form.select :retired_year, options_for_select((Date.current.year - 80..Date.current.year).to_a.reverse) %>
-      <%= form.select :retired_month, options_for_select((1..12).to_a), {}, { id: 'admin_retired_month' } %>
-      <%= form.select :retired_day, options_for_select((1..31).to_a) %>
+      <%= form.select :retired_year, options_for_select([['未登録', '']] + ((Date.current.year - 80..Date.current.year).to_a.reverse)) %>
+      <%= form.select :retired_month, options_for_select([['未登録', '']] + (1..12).to_a), {}, { id: 'admin_retired_month' } %>
+      <%= form.select :retired_day, options_for_select([['未登録', '']] + (1..31).to_a) %>
     </div>
   <% end %>
   </div>
