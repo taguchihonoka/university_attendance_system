@@ -74,7 +74,7 @@ student = Student.find_or_initialize_by(user: user, department: department)
 student.user = user
 student.attendance_number = '001'
 student.department = department
-student.grade = '1'
+student.grade = :undergraduate_1
 student.enrolled_date = Date.parse('2025-04-01')
 student.save!
 
