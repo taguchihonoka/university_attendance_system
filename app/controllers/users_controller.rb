@@ -10,8 +10,8 @@ class UsersController < ApplicationController
   def new
     @user = User.new
     @student = @user.build_student
-    #@teacher = Teacher.new(user_id:@user.id)
-    #@admin = Admin.new(user_id:@user.id)
+    @teacher = @user.build_teacher
+    @admin = @user.build_admin
   end
 
   def create
@@ -28,8 +28,10 @@ class UsersController < ApplicationController
         end
 
       elsif @user.role_id.to_i == 2
-        @teacher = Teacher.new(teacher_params)
-        if @user.save && @teacher.save
+        @teacher = @user.build_teacher(teacher_params)
+        logger.debug "teacher_params: #{teacher_params.inspect}"
+        if @teacher.save && @user.save 
+          logger.debug "assigned_date: #{@user.teacher.assigned_date.inspect}"
           redirect_to @user, notice: 'ユーザー「#{@user.name}」に失敗しました'
         else
           flash.now[:alert] = '登録に失敗しました'
@@ -37,8 +39,8 @@ class UsersController < ApplicationController
         end
 
       elsif @user.role_id.to_i == 3
-        @admin = Admin.new(admin_params)
-        if @user.save && @admin.save
+        @admin = @user.build_admin(admin_params)
+        if @admin.save && @user.save  
           redirect_to @user, notice: 'ユーザー「#{@user.name}」を登録しました'
         else 
           flash.now[:alert] = '登録に失敗しました'
@@ -47,12 +49,7 @@ class UsersController < ApplicationController
       end
 
     else
-      Rails.logger.debug "User errors: #{@user.errors.full_messages}"
-      Rails.logger.debug "Student errors: #{@student&.errors&.full_messages}"
-      Rails.logger.debug "student_params: #{student_params.inspect}"
-      Rails.logger.debug "@student is nil? #{ @student.nil? }"
       flash.now[:alert] = '登録に失敗しました'
-      @student ||= Student.new
       render :new
     end
   end
@@ -75,7 +72,7 @@ class UsersController < ApplicationController
     params.expect(user: %i[first_name last_name first_name_kana last_name_kana email password role_id identifier])
   end
 
-  # raw に代入した後enrolled_date を合成しその値を返す
+  # raw に代入した後、年月日を合成しその値を返す
   def student_params
     raw = params.expect(user: { student: %i[attendance_number department_id grade enrolled_year enrolled_month enrolled_day graduated_year graduated_month graduated_day dropout_year dropout_month dropout_day] })[:student]
 
@@ -91,10 +88,26 @@ class UsersController < ApplicationController
   end
 
   def teacher_params
-    params.expect(teacher: %i[instoructor_number department position assigned_date retired_date])
+    raw = params.expect(user: { teacher: %i[instructor_number department_id position_id assigned_year assigned_month assigned_day retired_year retired_year retired_month retired_day] })[:teacher]
+
+    raw.merge(
+      assigned_date: build_date(raw, :assigned),
+      retired_date: build_date(raw, :retired)
+    ).except(
+      :assigned_year, :assigned_month, :assigned_day,
+      :retired_year, :retired_month, :retired_day
+    )
   end
 
   def admin_params
-    params.expect(admin: %i[admin_number joined_date retired_date])
+    raw = params.expect(user: { admin: %i[admin_number joined_year joined_month joined_day retired_year retired_month retired_day] })[:admin]
+    
+    raw.merge(
+      joined_date: build_date(raw, :joined),
+      retired_date: build_date(raw, :retired)
+    ).except(
+      :joined_year, :joined_month, :joined_day,
+      :retired_year, :retired_month, :retired_day
+    )
   end
 end
