@@ -17,14 +17,13 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
 
-    if @user.save
+    if @user.valid?
       if @user.role_id.to_i == 1
         @student = @user.build_student(student_params)
-        if @student.save
+        if @student.save && @user.save
           redirect_to @user, notice: 'ユーザー「#{@user.name}」を登録しました'
         else
           flash.now[:alert] = '登録に失敗しました'
-          @student ||= Student.new
           render :new
         end
 
