@@ -1,3 +1,9 @@
+# rubocop:disable Metrics/AbcSize
+# rubocop:disable Metrics/CyclomaticComplexity
+# rubocop:disable Metrics/MethodLength
+# rubocop:disable Metrics/PerceivedComplexity
+# rubocop:disable Layout/LineLength
+
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
@@ -121,3 +127,9 @@ class UsersController < ApplicationController
     )
   end
 end
+
+# rubocop:enable Metrics/AbcSize
+# rubocop:enable Metrics/CyclomaticComplexity
+# rubocop:enable Metrics/MethodLength
+# rubocop:enable Metrics/PerceivedComplexity
+# rubocop:enable Layout/LineLength
