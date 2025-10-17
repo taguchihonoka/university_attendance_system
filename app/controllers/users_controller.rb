@@ -14,35 +14,38 @@ class UsersController < ApplicationController
     @admin = @user.build_admin
   end
 
+  def edit; end
+
   def create
     @user = User.new(user_params)
 
     if @user.valid?
-      if @user.role_id.to_i == 1
+      case @user.role_id.to_i
+      when 1
         @student = @user.build_student(student_params)
         if @student.save && @user.save
-          redirect_to @user, notice: 'ユーザー「#{@user.name}」を登録しました'
+          redirect_to @user, notice: "ユーザー「#{@user.name}」を登録しました"
         else
           flash.now[:alert] = '登録に失敗しました'
           render :new
         end
 
-      elsif @user.role_id.to_i == 2
+      when 2
         @teacher = @user.build_teacher(teacher_params)
         logger.debug "teacher_params: #{teacher_params.inspect}"
-        if @teacher.save && @user.save 
+        if @teacher.save && @user.save
           logger.debug "assigned_date: #{@user.teacher.assigned_date.inspect}"
-          redirect_to @user, notice: 'ユーザー「#{@user.name}」に失敗しました'
+          redirect_to @user, notice: "ユーザー「#{@user.name}」に失敗しました"
         else
           flash.now[:alert] = '登録に失敗しました'
           render :new
         end
 
-      elsif @user.role_id.to_i == 3
+      when 3
         @admin = @user.build_admin(admin_params)
-        if @admin.save && @user.save  
-          redirect_to @user, notice: 'ユーザー「#{@user.name}」を登録しました'
-        else 
+        if @admin.save && @user.save
+          redirect_to @user, notice: "ユーザー「#{@user.name}」を登録しました"
+        else
           flash.now[:alert] = '登録に失敗しました'
           render :new
         end
@@ -54,8 +57,6 @@ class UsersController < ApplicationController
     end
   end
 
-  def edit; end
-
   def update; end
 
   def destroy; end
@@ -64,8 +65,14 @@ class UsersController < ApplicationController
 
   # フォームで別々に入力された年月日をくっつける
   def build_date(hash, prefix)
-    y, m, d = hash["#{prefix}_year"], hash["#{prefix}_month"], hash["#{prefix}_day"] 
-    Date.new(y.to_i, m.to_i, d.to_i) rescue nil
+    y = hash["#{prefix}_year"]
+    m = hash["#{prefix}_month"]
+    d = hash["#{prefix}_day"]
+    begin
+      Date.new(y.to_i, m.to_i, d.to_i)
+    rescue StandardError
+      nil
+    end
   end
 
   def user_params
@@ -74,7 +81,8 @@ class UsersController < ApplicationController
 
   # raw に代入した後、年月日を合成しその値を返す
   def student_params
-    raw = params.expect(user: { student: %i[attendance_number department_id grade enrolled_year enrolled_month enrolled_day graduated_year graduated_month graduated_day dropout_year dropout_month dropout_day] })[:student]
+    raw = params.expect(user: { student: %i[attendance_number department_id grade enrolled_year enrolled_month
+                                            enrolled_day graduated_year graduated_month graduated_day dropout_year dropout_month dropout_day] })[:student]
 
     raw.merge(
       enrolled_date: build_date(raw, :enrolled),
@@ -88,7 +96,8 @@ class UsersController < ApplicationController
   end
 
   def teacher_params
-    raw = params.expect(user: { teacher: %i[instructor_number department_id position_id assigned_year assigned_month assigned_day retired_year retired_year retired_month retired_day] })[:teacher]
+    raw = params.expect(user: { teacher: %i[instructor_number department_id position_id assigned_year assigned_month
+                                            assigned_day retired_year retired_year retired_month retired_day] })[:teacher]
 
     raw.merge(
       assigned_date: build_date(raw, :assigned),
@@ -100,8 +109,9 @@ class UsersController < ApplicationController
   end
 
   def admin_params
-    raw = params.expect(user: { admin: %i[admin_number joined_year joined_month joined_day retired_year retired_month retired_day] })[:admin]
-    
+    raw = params.expect(user: { admin: %i[admin_number joined_year joined_month joined_day retired_year retired_month
+                                          retired_day] })[:admin]
+
     raw.merge(
       joined_date: build_date(raw, :joined),
       retired_date: build_date(raw, :retired)
