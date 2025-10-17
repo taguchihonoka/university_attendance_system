@@ -38,9 +38,7 @@ class UsersController < ApplicationController
 
       when 2
         @teacher = @user.build_teacher(teacher_params)
-        logger.debug "teacher_params: #{teacher_params.inspect}"
         if @teacher.save && @user.save
-          logger.debug "assigned_date: #{@user.teacher.assigned_date.inspect}"
           redirect_to @user, notice: "ユーザー「#{@user.name}」に失敗しました"
         else
           flash.now[:alert] = '登録に失敗しました'
