@@ -14,4 +14,9 @@ class User < ApplicationRecord
   validates :password, presence: true
   validates :identifier, presence: true, uniqueness: true
   has_secure_password
+
+  # フルネームを表示する
+  def name
+    "#{first_name} #{last_name}"
+  end
 end
